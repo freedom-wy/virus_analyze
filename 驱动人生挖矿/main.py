@@ -149,7 +149,7 @@ def find_ip():
     iplist2.sort(key=iplist.index)
     return iplist2
 
-# 生成随机IP？
+# 生成随机IP
 def xip(numb):
     del nip[:]
     for n in xrange(numb):
